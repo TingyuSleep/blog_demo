@@ -4,35 +4,33 @@ import (
 	"blog_demo/controller"
 	"blog_demo/logger"
 	"blog_demo/middlewares"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter(mode string) *gin.Engine {
-	if err := controller.InitTrans("zh"); err != nil {
+	// 设置 Gin 的运行模式
+	gin.SetMode(mode)
 
+	if err := controller.InitTrans("zh"); err != nil {
+		log.Fatalf("初始化翻译器失败: %v", err)
 	}
 	r := gin.New()
 	//使用日志中间件
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
+	//使用路由组
+	v1 := r.Group("/api/v1")
 
 	//注册业务路由
-	r.POST("/signup", controller.SignUpHandler)
+	v1.POST("/signup", controller.SignUpHandler)
 	//登录业务路由
-	r.POST("/login", controller.LoginHandler)
-
-	r.GET("/ping", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
-		//如果是登录的用户，判断请求头中是否有 有效的JWT
-		isLogin := true
-		c.Request.Header.Get("Authorization")
-		if isLogin {
-			c.String(http.StatusOK, "pong")
-		} else {
-			//否则返回 请先登录
-			c.String(http.StatusOK, "请登录")
-		}
-	})
+	v1.POST("/login", controller.LoginHandler)
+	v1.Use(middlewares.JWTAuthMiddleware()) // 应用JWT认证中间件
+	{
+		v1.GET("/community", controller.CommunityHandler)
+	}
 
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{

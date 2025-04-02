@@ -1,9 +1,12 @@
 name: "blog_demo"
-mode: "dev"
+mode: "debug"
 port: 8080
 version: "v0.0.1"
 start_time: "2025-03-24"
 machine_id: 1
+
+auth:
+  jwt_expire: 8760   #jwt有效期24*365小时
 
 log:
   level: "debug"

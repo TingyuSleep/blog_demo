@@ -11,7 +11,7 @@ import (
 var Conf = new(AppConfig)
 
 type AppConfig struct {
-	Name         string `mapstructure:"name"` //注意，不要使用yaml json，统一使用mapstructure标签（使用了第三方库）
+	Name         string `mapstructure:"name"` //注意，不要使用yaml json，统一使用mapstructure标签（使用了第三方库viper）
 	Mode         string `mapstructure:"mode"`
 	Version      string `mapstructure:"version"`
 	Port         int    `mapstructure:"port"`
@@ -57,9 +57,9 @@ func Init() (err error) {
 	*/
 
 	//方法二：指定配置文件名和配置文件的位置，viper自行查找可用的配置文件
-	viper.SetConfigFile("config.yaml")
-	//viper.SetConfigName("config") // 指定配置文件名称（不需要带后缀）
-	//viper.SetConfigType("yaml")   // 指定配置文件类型(专用于从远程获取配置信息是指定配置文件类型的)
+	//viper.SetConfigFile("config.yaml")
+	viper.SetConfigName("config") // 指定配置文件名称（不需要带后缀）
+	viper.SetConfigType("yaml")   // 指定配置文件类型(专用于从远程获取配置信息是指定配置文件类型的)
 	viper.AddConfigPath(".")      // 指定查找配置文件的路径（这里使用相对路径，.表示在当前目录（即，根目录）下找）
 	viper.AddConfigPath("./conf") //再从conf目录下找配置文件
 

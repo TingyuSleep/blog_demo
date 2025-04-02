@@ -4,10 +4,10 @@ import (
 	"errors"
 	"time"
 
+	"github.com/spf13/viper"
+
 	"github.com/golang-jwt/jwt/v4"
 )
-
-const TokenExpireDuration = time.Hour * 2
 
 var mySecret = []byte("夏天夏天悄悄过去")
 
@@ -31,8 +31,9 @@ func GenToken(userID int64, username string) (string, error) {
 		userID,
 		username,
 		jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(TokenExpireDuration)),
-			Issuer:    "my-project", // 签发人
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(
+				time.Duration(viper.GetInt("auth.jwt_expire")) * time.Hour)),
+			Issuer: "my-project", // 签发人
 		},
 	}
 	// 使用指定的签名方法创建签名对象
