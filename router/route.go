@@ -10,10 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter(mode string) *gin.Engine {
-	// 设置 Gin 的运行模式
-	gin.SetMode(mode)
-
+func SetupRouter() *gin.Engine {
 	if err := controller.InitTrans("zh"); err != nil {
 		log.Fatalf("初始化翻译器失败: %v", err)
 	}
@@ -31,6 +28,7 @@ func SetupRouter(mode string) *gin.Engine {
 	{
 		v1.GET("/community", controller.CommunityHandler)
 		v1.GET("/community/:id", controller.CommunityDetailHandler)
+		v1.POST("/post", controller.CreatePostHandler)
 	}
 
 	r.NoRoute(func(c *gin.Context) {
