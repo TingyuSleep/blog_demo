@@ -5,16 +5,9 @@ import (
 	"crypto/md5"
 	"database/sql"
 	"encoding/hex"
-	"errors"
 )
 
 const secret = "tingyusleep.cn"
-
-var (
-	ErrorUserExist    = errors.New("用户已存在")
-	ErrorUserNotExist = errors.New("用户不存在")
-	ErrorInvalidParam = errors.New("用户名或密码错误")
-)
 
 // CheckUserExist 检查指定用户名的用户是否存在
 func CheckUserExist(username string) error {
@@ -24,7 +17,7 @@ func CheckUserExist(username string) error {
 		return err
 	}
 	if count > 0 {
-		return ErrorUserExist
+		return ErrUserExist
 	}
 	return nil
 }
@@ -51,7 +44,7 @@ func Login(user *models.User) (err error) {
 	sqlStr := `select user_id,username,password from user where username=?`
 	err = db.Get(user, sqlStr, user.Username)
 	if err == sql.ErrNoRows {
-		return ErrorUserNotExist
+		return ErrUserNotExist
 	}
 	if err != nil { //查询数据库错误
 		return err
@@ -60,7 +53,7 @@ func Login(user *models.User) (err error) {
 	//判断密码是够正确
 	password := encryptPassword(oPassword)
 	if password != user.Password {
-		return ErrorInvalidParam
+		return ErrInvalidParam
 	}
 	return
 }
