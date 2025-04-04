@@ -7,6 +7,7 @@ import (
 	"blog_demo/pkg/snowflake"
 )
 
+// SignUp 注册
 func SignUp(p *models.ParamSignUp) (err error) {
 	//1.判断用户是否存在
 	if err = mysql.CheckUserExist(p.Username); err != nil {
@@ -28,6 +29,7 @@ func SignUp(p *models.ParamSignUp) (err error) {
 
 }
 
+// Login 登录
 func Login(p *models.ParamLogin) (token string, err error) {
 	user := &models.User{
 		Username: p.Username,
