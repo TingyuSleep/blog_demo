@@ -40,12 +40,11 @@ func GetPostByID(pid int64) (data *models.ApiPostDetail, err error) {
 				post.CommunityID), zap.Error(err))
 		return
 	}
-	// 初始化指针变量data
+	// 初始化指针变量data,拼接接口数据
 	data = &models.ApiPostDetail{
 		AuthorName:      user.Username,
 		Post:            post,
 		CommunityDetail: communityDetail,
 	}
-
 	return
 }
