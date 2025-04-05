@@ -4,7 +4,7 @@ import "time"
 
 // 内存对齐概念（相同的类型放在一起定义）
 type Post struct {
-	ID          int64     `json:"id" db:"post_id"`
+	ID          int64     `json:"id,string" db:"post_id"`
 	AuthorID    int64     `json:"author_id" db:"author_id" ` // author_id 是通过 GetCurrentUser 方法传递的
 	CommunityID int64     `json:"community_id" db:"community_id" binding:"required"`
 	Status      int32     `json:"status" db:"status"`
