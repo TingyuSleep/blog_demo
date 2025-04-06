@@ -24,13 +24,13 @@ func CreatePostHandler(c *gin.Context) {
 	// 从c中取到当前用户的ID
 	userID, err := GetCurrentUser(c)
 	if err != nil {
-		ResponseError(c, CodeNeedAuth)
+		ResponseError(c, CodeNeedLogin)
 		return
 	}
 	p.AuthorID = userID
 
 	// 2. 创建帖子当前用户的用户ID
-	if err := logic.CreatePost(p); err != nil {
+	if err := logic.CreatePost(c, p); err != nil {
 		zap.L().Error("logic.CreatePost failed", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return

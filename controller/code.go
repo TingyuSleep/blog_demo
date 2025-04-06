@@ -12,7 +12,7 @@ const (
 	CodeInvalidPassword
 	CodeServerBusy
 
-	CodeNeedAuth
+	CodeNeedLogin
 	CodeInvalidAuth
 )
 
@@ -23,7 +23,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeUserNotExist:    "用户名不存在",
 	CodeInvalidPassword: "用户名或密码错误",
 	CodeServerBusy:      "服务繁忙",
-	CodeNeedAuth:        "需要登录",
+	CodeNeedLogin:       "需要登录",
 	CodeInvalidAuth:     "无效的token",
 }
 

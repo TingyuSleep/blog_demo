@@ -17,7 +17,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 		// 这里的具体实现方式要依据你的实际业务情况决定
 		authHeader := c.Request.Header.Get("Authorization")
 		if authHeader == "" {
-			controller.ResponseError(c, controller.CodeNeedAuth)
+			controller.ResponseError(c, controller.CodeNeedLogin)
 			c.Abort()
 			return
 		}
