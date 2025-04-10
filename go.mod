@@ -12,6 +12,7 @@ require (
 	github.com/go-sql-driver/mysql v1.9.1
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/jmoiron/sqlx v1.4.0
+	github.com/juju/ratelimit v1.0.2
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/redis/go-redis/v9 v9.7.3
 	github.com/spf13/viper v1.20.1

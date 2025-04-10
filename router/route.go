@@ -6,6 +6,7 @@ import (
 	"blog_demo/middlewares"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,8 +16,8 @@ func SetupRouter() *gin.Engine {
 		log.Fatalf("初始化翻译器失败: %v", err)
 	}
 	r := gin.New()
-	//使用日志中间件
-	r.Use(logger.GinLogger(), logger.GinRecovery(true))
+	// 添加全局中间件，日志中间件，限流中间件
+	r.Use(logger.GinLogger(), logger.GinRecovery(true), middlewares.RateLimitMiddleware(time.Second*1, 1))
 	//使用路由组
 	v1 := r.Group("/api/v1")
 
