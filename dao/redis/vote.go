@@ -50,7 +50,7 @@ func VoteForPost(c *gin.Context, userID, postID string, direction float64) (err 
 	// 注意，2和3要放到一个pipeline事务中执行
 
 	// 2.更新帖子的分数
-	// 先查当前用户给当前帖子的投票记录
+	// 先查当前用户给当前帖子的投票记录，拿到以前投票（赞成1/反对-1/未投票0）
 	ov, err := rdb.ZScore(c, getRedisKey(KeyPostVoteType+postID), userID).Result()
 
 	//计算两次投票差值

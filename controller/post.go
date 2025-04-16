@@ -80,3 +80,40 @@ func GetPostListHandler(c *gin.Context) {
 	// 返回响应
 	ResponseSuccess(c, data)
 }
+
+// GetPostListHandler2 升级版帖子列表接口 ，根据发布时间 或者 分数 动态获取帖子列表
+func GetPostListHandler2(c *gin.Context) {
+	/*
+		   1. 获取参数
+		   2. 去redis查询id列表
+		   3. 根据id去数据库查询帖子详细信息
+		get请求参数(query string)：/api/v1/postList2?page=2&size=10&order=time
+	*/
+
+	// 1. 获取参数
+	// 初始化结构体时,指定初始参数
+	p := &models.ParamPostList{
+		Page:  1,
+		Size:  10,
+		Order: models.OrderTime,
+	}
+
+	//c.ShouldBind()	根据请求的参数类型选择相应的方法获取数据
+	//c.ShouldBindJSON()	如果前端的请求中鞋带的是json格式的数据，才能使用这个方法获取到数据
+	if err := c.ShouldBindQuery(p); err != nil {
+		zap.L().Error("GetPostListHandler2 with invalid param", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+
+	// 2.获取数据
+	data, err := logic.GetPostList2(c, p)
+	if err != nil {
+		zap.L().Error("GetPostList2 failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+
+	// 返回响应
+	ResponseSuccess(c, data)
+}

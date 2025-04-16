@@ -18,6 +18,12 @@ func SetupRouter() *gin.Engine {
 	r := gin.New()
 	// 添加全局中间件，日志中间件，限流中间件
 	r.Use(logger.GinLogger(), logger.GinRecovery(true), middlewares.RateLimitMiddleware(time.Second*1, 1))
+
+	// 测试路由
+	r.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
+
 	//使用路由组
 	v1 := r.Group("/api/v1")
 
@@ -32,6 +38,8 @@ func SetupRouter() *gin.Engine {
 		v1.POST("/post", controller.CreatePostHandler)
 		v1.GET("/post/:id", controller.GetPostDetailHandler)
 		v1.GET("/postList", controller.GetPostListHandler)
+		// 升级版：根据发布时间或者分数获取帖子列表
+		v1.GET("/postList2", controller.GetPostListHandler2)
 		v1.POST("/vote", controller.PostVoteHandler)
 	}
 
