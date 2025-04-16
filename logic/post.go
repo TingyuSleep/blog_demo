@@ -115,9 +115,14 @@ func GetPostList2(c *gin.Context, p *models.ParamPostList) (data []*models.ApiPo
 		return
 	}
 	zap.L().Debug("GetPostList2", zap.Any("postList", postList))
+	// 提前查询每篇帖子的投票数
+	voteData, err := redis.GetPostVoteData(c, ids)
+	if err != nil {
+		return
+	}
 
 	// 查询多个帖子信息
-	for _, post := range postList {
+	for idx, post := range postList {
 		// 根据作者id查询作者信息
 		user, err := mysql.GetUserByID(post.AuthorID)
 		if err != nil {
@@ -135,6 +140,7 @@ func GetPostList2(c *gin.Context, p *models.ParamPostList) (data []*models.ApiPo
 		}
 		postDetail := &models.ApiPostDetail{
 			AuthorName:      user.Username,
+			VoteScore:       voteData[idx],
 			Post:            post,
 			CommunityDetail: communityDetail,
 		}

@@ -345,3 +345,9 @@
 {"level":"DEBUG","time":"2025-04-16T15:50:40.595+0800","caller":"logic/post.go:109","msg":"GetPostList2","ids":["8418004144492544"]}
 {"level":"DEBUG","time":"2025-04-16T15:50:40.599+0800","caller":"logic/post.go:117","msg":"GetPostList2","postList":[{"id":"8418004144492544","author_id":2231546970902528,"community_id":2,"status":0,"title":"自律","content":"自律","create_time":"2025-04-16T05:30:08Z","update_time":"0001-01-01T00:00:00Z"}]}
 {"level":"INFO","time":"2025-04-16T15:50:40.603+0800","caller":"logger/logger.go:81","msg":"/api/v1/postList2","status":200,"method":"GET","path":"/api/v1/postList2","query":"size=10&page=1&order=score","ip":"::1","user-agent":"PostmanRuntime/7.43.3","errors":"","cost":0.0095079}
+{"level":"DEBUG","time":"2025-04-16T16:26:30.415+0800","caller":"logic/vote.go:17","msg":"VoteForPost","userID":2231546970902528,"postID":"8418004144492544","direction":1}
+{"level":"INFO","time":"2025-04-16T16:26:30.446+0800","caller":"logger/logger.go:81","msg":"/api/v1/vote","status":200,"method":"POST","path":"/api/v1/vote","query":"","ip":"::1","user-agent":"PostmanRuntime/7.43.3","errors":"","cost":0.0324383}
+{"level":"DEBUG","time":"2025-04-16T16:26:57.913+0800","caller":"logic/vote.go:17","msg":"VoteForPost","userID":2231546970902528,"postID":"8418004144492544","direction":1}
+{"level":"INFO","time":"2025-04-16T16:26:57.915+0800","caller":"logger/logger.go:81","msg":"/api/v1/vote","status":200,"method":"POST","path":"/api/v1/vote","query":"","ip":"::1","user-agent":"PostmanRuntime/7.43.3","errors":"","cost":0.018097}
+{"level":"DEBUG","time":"2025-04-16T16:27:31.192+0800","caller":"logic/vote.go:17","msg":"VoteForPost","userID":2231546970902528,"postID":"8418004144492544","direction":1}
+{"level":"INFO","time":"2025-04-16T16:27:31.196+0800","caller":"logger/logger.go:81","msg":"/api/v1/vote","status":200,"method":"POST","path":"/api/v1/vote","query":"","ip":"::1","user-agent":"PostmanRuntime/7.43.3","errors":"","cost":0.0041219}

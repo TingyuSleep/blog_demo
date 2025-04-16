@@ -53,7 +53,7 @@ func VoteForPost(c *gin.Context, userID, postID string, direction float64) (err 
 	// 先查当前用户给当前帖子的投票记录，拿到以前投票（赞成1/反对-1/未投票0）
 	ov, err := rdb.ZScore(c, getRedisKey(KeyPostVoteType+postID), userID).Result()
 
-	//计算两次投票差值
+	//计算两次投票差值（可以保证用户不能重复投票）
 	diff := direction - ov
 	pipeline := rdb.TxPipeline()
 	pipeline.ZIncrBy(c, getRedisKey(KeyPostScore), diff*scorePerVote, postID)
